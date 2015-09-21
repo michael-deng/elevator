@@ -1,5 +1,5 @@
 ELEVATOR CONTROL SYSTEM
-
+Michael Deng
 
 
 Overview:
@@ -8,6 +8,7 @@ Overview:
 - Passengers are represented by a passenger class
 - The control system contains a list of all elevators
 - An elevator contains a list of all its passengers and where it needs to go to drop off/pick up passengers
+- All of the code is written in java and can be compiled
 
 
 
@@ -38,6 +39,7 @@ Four main classes:
 
 - Contains information about the passengers making the request
 - Has a reference to the elevator fulfilling the request
+
 
 
 Scheduling:
@@ -71,5 +73,4 @@ In the real world, we wouldn't have access to the number of passengers, so I wou
 Some Extra Notes:
 
 I use ArrayLists pretty liberally in this system. Efficiency can probably improved by using another data structure with better lookup/insertion/deletion speeds, such as a HashMap, but since the maximum number of elevators is only 16 and the maximum number of passengers in an elevator is probably no more than 20, I felt that using an ArrayList to store elevator/passenger is fine efficiency-wise.
-
 
