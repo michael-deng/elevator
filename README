@@ -9,6 +9,7 @@ Overview:
 - The control system contains a list of all elevators
 - An elevator contains a list of all its passengers and where it needs to go to drop off/pick up passengers
 - All of the code is written in java and can be compiled
+- You can instantiate the ElevatorControlSystem class and add new elevators by calling addElevator()
 
 
 

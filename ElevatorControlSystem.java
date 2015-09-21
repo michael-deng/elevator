@@ -6,6 +6,15 @@ class ElevatorControlSystem {
 	private ArrayList<Elevator> elevators; // References all the elevators in our system
 	private HashMap<Integer, Request> pickUpRequests; // Maps floor to the request at that floor
 
+
+	public void addElevator(Elevator e) {
+		if (elevators.size() < 16) {
+			elevators.add(e);
+		} else {
+			System.out.println("Maximum number of elevators is 16.")
+		}
+	}
+
 	/**
 	 * Return the elevator with the correct id that we're looking for
 	 * I don't need to use this method because I can use getters to access elevator fields
