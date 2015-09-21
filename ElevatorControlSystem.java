@@ -18,8 +18,7 @@ class ElevatorControlSystem {
 	/**
 	 * Update the status of an elevator
 	 */
-	public void update(Elevator e, int newid, int floorNum, Direction dir) {
-		e.setid(newid);
+	public void update(Elevator e, int floorNum, Direction dir) {
 		e.setFloor(floorNum);
 		e.setDirection(dir);
 		return;
@@ -60,7 +59,45 @@ class ElevatorControlSystem {
 	 * Time step the simulation
 	 */
 	public void step() {
-
+		for (Elevator e : elevators) {
+			int currFloor = e.getFloor();
+			ArrayList<Integer> goalsAbove = e.getGoalsAbove();
+			ArrayList<Integer> goalsBelow = e.getGoalsBelow();
+			switch (e.getDirection()) {
+				case UP:
+					if (goalsAbove.get(0) == currFloor) {
+						goalsAbove.remove(0);
+						if (goalsAbove.isEmpty()) {
+							if (goalsBelow.isEmpty()) {
+								update(e, currFloor, Direction.IMMOBILE);
+							} else {
+								update(e, currFloor, Direction.DOWN);
+							}
+						}
+					} else {
+						update(e, currFloor + 1, Direction.UP);
+					}
+				case DOWN:
+					if (goalsBelow.get(0) == currFloor) {
+						goalsBelow.remove(0);
+						if (goalsBelow.isEmpty()) {
+							if (goalsAbove.isEmpty()) {
+								update(e, currFloor, Direction.IMMOBILE);
+							} else {
+								update(e, currFloor, Direction.UP);
+							}
+						}
+					} else {
+						update(e, currFloor - 1, Direction.DOWN);
+					}
+				case IMMOBILE:
+					if (goalsBelow.size() > 0) {
+						update(e, currFloor, Direction.DOWN);
+					} else if (goalsAbove.size() > 0) {
+						update(e, currFloor, Direction.UP);
+					}	
+			}
+		}
 	}
 }
 
@@ -96,6 +133,14 @@ class Elevator {
 
 	public void setDirection(Direction d) {
 		dir = d;
+	}
+
+	public ArrayList<Integer> getGoalsAbove() {
+		return goalsAbove;
+	}
+
+	public ArrayList<Integer> getGoalsBelow() {
+		return goalsBelow;
 	}
 
 	/**
