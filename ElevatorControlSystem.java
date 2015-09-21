@@ -5,6 +5,7 @@ class ElevatorControlSystem {
 
 	/**
 	 * Return the elevator with the correct id that we're looking for
+	 * I don't need to use this method because I can use getters to access elevator fields
 	 */
 	public Elevator status(int elevatorid) {
 		for (Elevator e : elevators) {
@@ -41,7 +42,7 @@ class ElevatorControlSystem {
 			}
 		}
 
-		// Find the closest elevator coming to this floor in the same direction or immobile
+		// Find the closest elevator either coming to this floor in the same direction or immobile
 
 		Elevator closest = null;
 		int minFloorDiff = 0;
@@ -109,7 +110,9 @@ class ElevatorControlSystem {
 	}
 }
 
+
 enum Direction { UP, DOWN, IMMOBILE }
+
 
 class Elevator {
 	private int id;
@@ -200,7 +203,7 @@ class Elevator {
 			}
 			goalsAbove.add(newGoal);
 		} else {
-			// Handle the case in which the new goal is the same as the current floor
+			System.out.println("Can't add the current floor as a goal.");
 		}
 	}
 
@@ -212,6 +215,7 @@ class Elevator {
 	}
 }
 
+
 class Passenger {
 	public int destination;
 
@@ -219,3 +223,5 @@ class Passenger {
 		destination = d;
 	}
 }
+
+

@@ -1,7 +1,17 @@
 ELEVATOR CONTROL SYSTEM
 
 
-Two main classes:
+
+Overview:
+
+- Elevators are represented by an elevator class
+- Passengers are represented by a passenger class
+- The control system contains a list of all elevators
+- An elevator contains a list of all its passengers and where it needs to go to drop off/pick up passengers
+
+
+
+Three main classes:
 
 1. Elevator Control System
 
@@ -41,7 +51,7 @@ Some elevators might be undergoing maintenance, in which case the elevator shoul
 
 
 
-Some Additional Notes:
+Some Extra Notes:
 
 I use ArrayLists pretty liberally in this system. Efficiency can probably improved by using another data structure with better lookup/insertion/deletion speeds, such as a HashMap, but since the maximum number of elevators is only 16 and the maximum number of passengers in an elevator is probably no more than 20, I felt that using an ArrayList to store elevator/passenger is fine efficiency-wise.
 
