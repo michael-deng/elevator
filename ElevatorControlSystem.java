@@ -27,13 +27,13 @@ class ElevatorControlSystem {
 	/**
 	 * Receive a pickup request
 	 */
-	public void pickUp(int start, ArrayList<Passenger> passengers, Direction dir) {
+	public void pickUp(int start, ArrayList<Passenger> newPassengers, Direction dir) {
 
 		// First check if there is an elevator on this floor
 
 		for (Elevator e : elevators) {
-			if (passengers.size() <= e.freeSpace() && e.getFloor() == start) {
-				for (Passengers p : passengers) {
+			if (newPassengers.size() <= e.freeSpace() && e.getFloor() == start) {
+				for (Passenger p : newPassengers) {
 					e.addGoal(p.destination);
 					e.addPassenger(p);
 				}
@@ -46,7 +46,7 @@ class ElevatorControlSystem {
 		Elevator closest = null;
 		int minFloorDiff = 0;
 		for (Elevator e : elevators) {
-			if (!e.isFull() && (e.getDirection() == dir || e.getDirection() == Direction.IMMOBILE)) {
+			if (newPassengers.size() <= e.freeSpace() && (e.getDirection() == dir || e.getDirection() == Direction.IMMOBILE)) {
 				int difference = Math.abs(e.getFloor() - start);
 				if (difference < minFloorDiff) {
 					minFloorDiff = difference;
@@ -54,8 +54,10 @@ class ElevatorControlSystem {
 				}
 			}
 		}
-		closest.addGoal(destination);
-		closest.addPassenger(new Passenger(destination));
+		for (Passenger p : newPassengers) {
+			closest.addGoal(p.destination);
+		  closest.addPassenger(p);
+		}
 		return;
 	}
 
