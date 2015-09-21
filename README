@@ -11,7 +11,7 @@ Overview:
 
 
 
-Three main classes:
+Four main classes:
 
 1. Elevator Control System
 
@@ -19,7 +19,7 @@ Three main classes:
 - Allows the retrieval of an elevator
 - Has a method that allows updating of an elevator's attributes
 - Given a pickup request, schedules a pickup for an elevator in the system that has enough room for all passengers in the request
-- Enables stepping through a simulation of the control system
+- Enables stepping through a simulation of the control system (Given more time, I would definitely modularize this method better and make it less messy)
 
 2. Elevator
 
@@ -33,6 +33,10 @@ Three main classes:
 
 - Contains information about which floor a passenger is getting off at
 
+4. Request
+
+- Contains information about the passengers making the request
+- Has a reference to the elevator fulfilling the request
 
 
 Scheduling:
@@ -48,6 +52,8 @@ Right now, elevators do not consecutive pickup requests from the same floor.
 If I have more time, I would implement some more comprehensive features. For example, all elevators have emergency alarms. If it goes off, the elevator should stop and let people out. If there's no emergency, the requests of everyone who just got off should be re-entered with the pickup method. If there is a serious emergency like a fire, all elevators should stop at their closest floor and let everyone out.
 
 Some elevators might be undergoing maintenance, in which case the elevator should not respond to requests from regular users.
+
+In the real world, we wouldn't have access to the number of passengers, so I would enforce capacity by implementing a weight cap that the total weight of all passengers cannot surpass.
 
 
 

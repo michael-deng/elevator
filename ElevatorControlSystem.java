@@ -2,6 +2,7 @@ import java.util.*;
 
 class ElevatorControlSystem {
 	private ArrayList<Elevator> elevators;
+	private HashMap<Integer, Request> pickUpRequests; // Maps floor to the request at that floor
 
 	/**
 	 * Return the elevator with the correct id that we're looking for
@@ -55,9 +56,11 @@ class ElevatorControlSystem {
 				}
 			}
 		}
-		for (Passenger p : newPassengers) {
-			closest.addGoal(p.destination);
-		  closest.addPassenger(p);
+		closest.addGoal(start);
+		if (pickUpRequests.containsKey(start)) {
+			pickUpRequests.get(start).passengers.addAll(newPassengers);
+		} else {
+			pickUpRequests.put(start, new Request(newPassengers, closest));
 		}
 		return;
 	}
@@ -74,7 +77,18 @@ class ElevatorControlSystem {
 				case UP:
 					if (goalsAbove.get(0) == currFloor) {
 						goalsAbove.remove(0);
+
+						// Drop off passengers
 						e.dropOff(currFloor);
+
+						// Pick up passengers
+						if (pickUpRequests.containsKey(currFloor) && pickUpRequests.get(currFloor).elevator == e) {
+							for (Passenger p : pickUpRequests.get(currFloor).passengers) {
+								e.addGoal(p.destination);
+								e.addPassenger(p);
+							}
+							pickUpRequests.remove(currFloor);
+						}
 						if (goalsAbove.isEmpty()) {
 							if (goalsBelow.isEmpty()) {
 								update(e, currFloor, Direction.IMMOBILE);
@@ -88,7 +102,18 @@ class ElevatorControlSystem {
 				case DOWN:
 					if (goalsBelow.get(0) == currFloor) {
 						goalsBelow.remove(0);
+
+						// Drop off passengers
 						e.dropOff(currFloor);
+
+						// Pick up passengers
+						if (pickUpRequests.containsKey(currFloor) && pickUpRequests.get(currFloor).elevator == e) {
+							for (Passenger p : pickUpRequests.get(currFloor).passengers) {
+								e.addGoal(p.destination);
+								e.addPassenger(p);
+							}
+							pickUpRequests.remove(currFloor);
+						}
 						if (goalsBelow.isEmpty()) {
 							if (goalsAbove.isEmpty()) {
 								update(e, currFloor, Direction.IMMOBILE);
@@ -118,7 +143,7 @@ class Elevator {
 	private int id;
 	private int floor;
 	private Direction dir;
-	private int capacity;
+	private int capacity; // This is a softcap, so the number of passengers may exceed capacity but no more passengers can be added past that point
 	private ArrayList<Passenger> passengers; // Key is floor, value is number of passengers getting off at that floor
 	private ArrayList<Integer> goalsAbove; // Goal floors above the current floor sorted increasing
 	private ArrayList<Integer> goalsBelow; // Goal floors below the current floor sorted decreasing
@@ -221,6 +246,16 @@ class Passenger {
 
 	public Passenger(int d) {
 		destination = d;
+	}
+}
+
+class Request {
+	public ArrayList<Passenger> passengers;
+	public Elevator elevator;
+
+	public Request(ArrayList<Passenger> p, Elevator e) {
+		passengers = p;
+		elevator = e;
 	}
 }
 
