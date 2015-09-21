@@ -151,7 +151,7 @@ class Elevator {
 	private int id;
 	private int floor;
 	private Direction dir;
-	private int capacity; // This is a softcap, so the number of passengers may exceed capacity but no more passengers can be added past that point
+	private int capacity; // This is a softcap, so the number of passengers may exceed capacity but no more passengers can be added past this limit
 	private ArrayList<Passenger> passengers; // Key is floor, value is number of passengers getting off at that floor
 	private ArrayList<Integer> goalsAbove; // Goal floors above the current floor sorted increasing
 	private ArrayList<Integer> goalsBelow; // Goal floors below the current floor sorted decreasing

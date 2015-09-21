@@ -48,7 +48,9 @@ Some additional scheduling considerations are to serve large pickup requests to 
 
 Also, we want to keep at least a couple elevators near the bottom of the building, since the main floor will be receiving the most requests on average.
 
-If this is an office building, we might also want to consider opening and closing hours, since during opening hours more people will be going up and during closing hours more people will be going down.
+If this is an office building, we might also want to consider opening and closing hours, since during opening hours more people will be going up and during closing hours more people will be going down. As such, we would optimize our algorithm based on the time of day.
+
+If this is a building with very fast elevators, we may want to optimize for less people per elevator to improve comfort. In this case, we would fulfil pickup requests with less crowded elevators rather than the closest ones.
 
 
 
