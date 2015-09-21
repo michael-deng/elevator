@@ -1,7 +1,9 @@
 import java.util.*;
 
+enum Direction { UP, DOWN, IMMOBILE }
+
 class ElevatorControlSystem {
-	private ArrayList<Elevator> elevators;
+	private ArrayList<Elevator> elevators; // References all the elevators in our system
 	private HashMap<Integer, Request> pickUpRequests; // Maps floor to the request at that floor
 
 	/**
@@ -31,10 +33,9 @@ class ElevatorControlSystem {
 	 */
 	public void pickUp(int start, ArrayList<Passenger> newPassengers, Direction dir) {
 
-		// First check if there is an elevator on this floor
-
+		// First check if there is an elevator on this floor and if so, onboard the passengers
 		for (Elevator e : elevators) {
-			if (newPassengers.size() <= e.freeSpace() && e.getFloor() == start) {
+			if (e.hasSpace() && e.getFloor() == start) {
 				for (Passenger p : newPassengers) {
 					e.addGoal(p.destination);
 					e.addPassenger(p);
@@ -43,12 +44,11 @@ class ElevatorControlSystem {
 			}
 		}
 
-		// Find the closest elevator either coming to this floor in the same direction or immobile
-
+		// Find the closest elevator either coming to this floor in the same direction or currently immobile
 		Elevator closest = null;
 		int minFloorDiff = 0;
 		for (Elevator e : elevators) {
-			if (newPassengers.size() <= e.freeSpace() && (e.getDirection() == dir || e.getDirection() == Direction.IMMOBILE)) {
+			if (e.hasSpace() && (e.getDirection() == dir || e.getDirection() == Direction.IMMOBILE)) {
 				int difference = Math.abs(e.getFloor() - start);
 				if (difference < minFloorDiff) {
 					minFloorDiff = difference;
@@ -57,12 +57,16 @@ class ElevatorControlSystem {
 			}
 		}
 		closest.addGoal(start);
+
+		// If there already exists a pickup request from this floor, add the new passengers to that request
 		if (pickUpRequests.containsKey(start)) {
 			pickUpRequests.get(start).passengers.addAll(newPassengers);
-		} else {
+		} 
+
+		// Otherwise, add the new request into the list of requests
+		else {
 			pickUpRequests.put(start, new Request(newPassengers, closest));
 		}
-		return;
 	}
 
 	/**
@@ -89,6 +93,8 @@ class ElevatorControlSystem {
 							}
 							pickUpRequests.remove(currFloor);
 						}
+
+						// Check if we have to change directions
 						if (goalsAbove.isEmpty()) {
 							if (goalsBelow.isEmpty()) {
 								update(e, currFloor, Direction.IMMOBILE);
@@ -96,6 +102,8 @@ class ElevatorControlSystem {
 								update(e, currFloor, Direction.DOWN);
 							}
 						}
+
+					// Move the elevator one floor if we don't have to load/offload passengers
 					} else {
 						update(e, currFloor + 1, Direction.UP);
 					}
@@ -114,6 +122,8 @@ class ElevatorControlSystem {
 							}
 							pickUpRequests.remove(currFloor);
 						}
+
+						// Check if we have to change directions
 						if (goalsBelow.isEmpty()) {
 							if (goalsAbove.isEmpty()) {
 								update(e, currFloor, Direction.IMMOBILE);
@@ -121,6 +131,8 @@ class ElevatorControlSystem {
 								update(e, currFloor, Direction.UP);
 							}
 						}
+
+					// Move the elevator one floor if we don't have to load/offload passengers
 					} else {
 						update(e, currFloor - 1, Direction.DOWN);
 					}
@@ -134,10 +146,6 @@ class ElevatorControlSystem {
 		}
 	}
 }
-
-
-enum Direction { UP, DOWN, IMMOBILE }
-
 
 class Elevator {
 	private int id;
@@ -235,8 +243,8 @@ class Elevator {
 	/**
 	 * Returns whether or not an elevator is full
 	 */
-	public int freeSpace() {
-		return capacity - passengers.size();
+	public boolean hasSpace() {
+		return capacity - passengers.size() > 0;
 	}
 }
 

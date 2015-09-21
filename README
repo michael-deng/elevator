@@ -16,6 +16,7 @@ Four main classes:
 1. Elevator Control System
 
 - Has a reference to all the elevators in the system via an ArrayList
+- Uses a hashmap to keep track of all the requests
 - Allows the retrieval of an elevator
 - Has a method that allows updating of an elevator's attributes
 - Given a pickup request, schedules a pickup for an elevator in the system that has enough room for all passengers in the request
