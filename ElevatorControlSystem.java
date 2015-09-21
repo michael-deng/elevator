@@ -109,7 +109,7 @@ class Elevator {
 	private Direction dir;
 	private int capacity;
 	private ArrayList<Integer> goalsAbove; // Goal floors above the current floor sorted increasing
-	private ArrayList<Integer> goalsBelow; // Gal floors below the current floor sorted decreasing
+	private ArrayList<Integer> goalsBelow; // Goal floors below the current floor sorted decreasing
 
 	public int getid() {
 		return id;
@@ -149,7 +149,11 @@ class Elevator {
 	public void addGoal(int newGoal) {
 		if (newGoal < floor) {
 			for (int i = 0; i < goalsBelow.size(); i++) {
-				if (goalsBelow.get(i) < newGoal) {
+				int g = goalsBelow.get(i);
+				if (g == newGoal) {
+					return; // Do nothing if new goal is already in our goals list
+				}
+				if (g < newGoal) {
 					goalsBelow.add(i, newGoal);
 					return;
 				}
@@ -157,7 +161,11 @@ class Elevator {
 			goalsBelow.add(newGoal);
 		} else if (newGoal > floor) {
 			for (int i = 0; i < goalsAbove.size(); i++) {
-				if (goalsAbove.get(i) > newGoal) {
+				int g = goalsAbove.get(i);
+				if (g == newGoal) {
+					return; // Do nothing if new goal is already in our goals list
+				}
+				if (g > newGoal) {
 					goalsAbove.add(i, newGoal);
 					return;
 				}
