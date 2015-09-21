@@ -44,6 +44,12 @@ Scheduling:
 
 Given a pickup request, we always first check if there is an elevator with room on the floor for which the request is being made. If so, that elevator should handle the request. If not, we find the closest elevator with room that is either going in the same direction as the request or immobile. That elevator will handle the request. We will store the pickup request in a HashMap data structure until the handling elevator arrives at the floor, at which time we will load the elevator with the passengers in the request and remove the request from the HashMap.
 
+Some additional scheduling considerations are to serve large pickup requests to emptier elevators. Also, we can try to minimize the amount of time people spend being transported in an elevator. For example, an elevator with 10 people stopping for one person at this floor uses more cumulative time than an empty elevator coming from five floors away to serve someone at this floor. In this case, even though the more crowded elevator is closer, we might want to use the empty elevator to fulfil the request because it will save more cumulative time.
+
+Also, we want to keep at least a couple elevators near the bottom of the building, since the main floor will be receiving the most requests on average.
+
+If this is an office building, we might also want to consider opening and closing hours, since during opening hours more people will be going up and during closing hours more people will be going down.
+
 
 
 Additional Considerations:
