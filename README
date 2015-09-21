@@ -46,6 +46,8 @@ Given a pickup request, we always first check if there is an elevator with room 
 
 Some additional scheduling considerations are to serve large pickup requests to emptier elevators. Also, we can try to minimize the amount of time people spend being transported in an elevator. For example, an elevator with 10 people stopping for one person at this floor uses more cumulative time than an empty elevator coming from five floors away to serve someone at this floor. In this case, even though the more crowded elevator is closer, we might want to use the empty elevator to fulfil the request because it will save more cumulative time.
 
+Another optimization is that if an elevator is already moving to this floor in the same direction as the request, we can just use that elevator to fulfil the request even if it's not the closest one since it's already stopping at this floor anyways.
+
 Also, we want to keep at least a couple elevators near the bottom of the building, since the main floor will be receiving the most requests on average.
 
 If this is an office building, we might also want to consider opening and closing hours, since during opening hours more people will be going up and during closing hours more people will be going down. As such, we would optimize our algorithm based on the time of day.
@@ -58,7 +60,7 @@ Additional Considerations:
 
 If I have more time, I would implement some more comprehensive features. For example, all elevators have emergency alarms. If it goes off, the elevator should stop and let people out. If there's no emergency, the requests of everyone who just got off should be re-entered with the pickup method. If there is a serious emergency like a fire, all elevators should stop at their closest floor and let everyone out.
 
-Modularization can definitely be improved, as well as a design clarity since the pickUp() and step() methods are a little messy.
+Modularization can definitely be improved, as well as a design clarity since the pickUp() and step() methods are a little bit messy.
 
 Some elevators might be undergoing maintenance, in which case the elevator should not respond to requests from regular users.
 
