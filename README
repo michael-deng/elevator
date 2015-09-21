@@ -42,15 +42,15 @@ Four main classes:
 
 Scheduling:
 
-Given a pickup request, we always first check if there is an elevator with room on the floor for which the request is being made. If so, that elevator should handle the request. If not, we find the closest elevator with room that is either going in the same direction as the request or immobile, and that elevator will handle the request.
+Given a pickup request, we always first check if there is an elevator with room on the floor for which the request is being made. If so, that elevator should handle the request. If not, we find the closest elevator with room that is either going in the same direction as the request or immobile. That elevator will handle the request. We will store the pickup request in a HashMap data structure until the handling elevator arrives at the floor, at which time we will load the elevator with the passengers in the request and remove the request from the HashMap.
 
 
 
 Additional Considerations:
 
-Right now, elevators do not consecutive pickup requests from the same floor.
-
 If I have more time, I would implement some more comprehensive features. For example, all elevators have emergency alarms. If it goes off, the elevator should stop and let people out. If there's no emergency, the requests of everyone who just got off should be re-entered with the pickup method. If there is a serious emergency like a fire, all elevators should stop at their closest floor and let everyone out.
+
+Modularization can definitely be improved, as well as a design clarity since the pickUp() and step() methods are a little messy.
 
 Some elevators might be undergoing maintenance, in which case the elevator should not respond to requests from regular users.
 
