@@ -34,6 +34,7 @@ class ElevatorControlSystem {
 		for (Elevator e : elevators) {
 			if (!e.isFull() && e.getFloor() == start) {
 				e.addGoal(destination);
+				e.addPassenger(new Passenger(destination));
 				return;
 			}
 		}
@@ -52,6 +53,7 @@ class ElevatorControlSystem {
 			}
 		}
 		closest.addGoal(destination);
+		closest.addPassenger(new Passenger(destination));
 		return;
 	}
 
@@ -143,7 +145,7 @@ class Elevator {
 	}
 
 	/**
-	 * Offload passengers at a given floor
+	 * Offload passengers who's destination is at the input floor
 	 */
 	public void dropOff(int floor) {
 		for (Passenger p : new ArrayList<>(passengers)) {

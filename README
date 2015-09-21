@@ -14,11 +14,23 @@ Two main classes:
 2. Elevator
 
 - Has getters and setters for accessing and modifying the attributes of an elevator
-- Stores all scheduled dropoffs in two separate lists, one containing all dropoffs above the current floor and one containing all dropoffs below the current floor
-- Contains an addFloor method that takes a dropoff location and inserts it into the correct position in the correct dropoff list
+- Stores all scheduled dropoffs in two separate lists, one containing all dropoffs above the current floor (goalsAbove) and one containing all dropoffs below the current floor (goalsBelow)
+- goalsAbove is sorted in increasing order, which is the order you would visit those floors if you were in an elevator going upwards
+- Similarly, goalsBelow is sorted in decreasing order
+- This class contains an addFloor method that takes a dropoff destination and inserts it into the correct position in the correct dropoff list to maintain the right order
+
+3. Passenger
+
+- Contains information about which floor a passenger is getting off at
 
 
 
 Scheduling:
 
 Given a pickup request, we always first check if there is an elevator with room on the floor for which the request is being made. If so, that elevator should handle the request. If not, we find the closest elevator with room that is either going in the same direction as the request or immobile, and that elevator will handle the request.
+
+
+
+Some Additional Notes:
+
+I use ArrayLists pretty liberally in this system. Efficiency can probably improved by using another data structure with better lookup/insertion/deletion speeds, such as a HashMap, but since the maximum number of elevators is only 16 and the maximum number of passengers in an elevator is probably no more than 20, I felt that using an ArrayList to store elevator/passenger is fine efficiency-wise.
