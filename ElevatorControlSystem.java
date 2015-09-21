@@ -1,3 +1,5 @@
+import java.util.*;
+
 class ElevatorControlSystem {
 	private ArrayList<Elevator> elevators;
 
@@ -17,12 +19,10 @@ class ElevatorControlSystem {
 	 * Update the status of an elevator
 	 */
 	public void update(Elevator e, int newid, int floorNum, Direction dir) {
-		if (e.getid() == elevatorid) {
-			e.setid(newid);
-			e.setFloor(floorNum);
-			e.setDirection(dir);
-			return;
-		}
+		e.setid(newid);
+		e.setFloor(floorNum);
+		e.setDirection(dir);
+		return;
 	}
 
 	/**
@@ -44,7 +44,7 @@ class ElevatorControlSystem {
 		Elevator closest = null;
 		int minFloorDiff = 0;
 		for (Elevator e : elevators) {
-			if (!e.isFull() && (e.getDirection() == dir || e.dir == Direction.IMMOBILE)) {
+			if (!e.isFull() && (e.getDirection() == dir || e.getDirection() == Direction.IMMOBILE)) {
 				int difference = Math.abs(e.getFloor() - start);
 				if (difference < minFloorDiff) {
 					minFloorDiff = difference;
@@ -64,9 +64,7 @@ class ElevatorControlSystem {
 	}
 }
 
-
-
-public enum Direction { UP, DOWN, IMMOBILE }
+enum Direction { UP, DOWN, IMMOBILE }
 
 class Elevator {
 	private int id;
@@ -111,7 +109,7 @@ class Elevator {
 					return;
 				}
 			}
-			goalBelow.add(newGoal);
+			goalsBelow.add(newGoal);
 		} else if (newGoal > floor) {
 			for (int i = 0; i < goalsAbove.size(); i++) {
 				if (goalsAbove.get(i) > newGoal) {
@@ -119,7 +117,7 @@ class Elevator {
 					return;
 				}
 			}
-			goalAbove.add(newGoal);
+			goalsAbove.add(newGoal);
 		} else {
 			// Handle the case in which the new goal is the same as the current floor
 		}
@@ -129,7 +127,7 @@ class Elevator {
 	 * Returns whether or not an elevator is full
 	 */
 	public boolean isFull() {
-		return goalAbove.size() + goalBelow.size() == capacity;
+		return goalsAbove.size() + goalsBelow.size() == capacity;
 	}
 
 }

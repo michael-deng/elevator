@@ -1,4 +1,5 @@
-Elevator Control System
+ELEVATOR CONTROL SYSTEM
+
 
 Two main classes:
 
@@ -16,3 +17,8 @@ Two main classes:
 - Stores all scheduled dropoffs in two separate lists, one containing all dropoffs above the current floor and one containing all dropoffs below the current floor
 - Contains an addFloor method that takes a dropoff location and inserts it into the correct position in the correct dropoff list
 
+
+
+Scheduling:
+
+Given a pickup request, we always first check if there is an elevator with room on the floor for which the request is being made. If so, that elevator should handle the request. If not, we find the closest elevator with room that is either going in the same direction as the request or immobile, and that elevator will handle the request.
