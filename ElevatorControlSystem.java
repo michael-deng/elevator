@@ -67,6 +67,7 @@ class ElevatorControlSystem {
 				case UP:
 					if (goalsAbove.get(0) == currFloor) {
 						goalsAbove.remove(0);
+						e.dropOff(currFloor);
 						if (goalsAbove.isEmpty()) {
 							if (goalsBelow.isEmpty()) {
 								update(e, currFloor, Direction.IMMOBILE);
@@ -80,6 +81,7 @@ class ElevatorControlSystem {
 				case DOWN:
 					if (goalsBelow.get(0) == currFloor) {
 						goalsBelow.remove(0);
+						e.dropOff(currFloor);
 						if (goalsBelow.isEmpty()) {
 							if (goalsAbove.isEmpty()) {
 								update(e, currFloor, Direction.IMMOBILE);
@@ -108,6 +110,7 @@ class Elevator {
 	private int floor;
 	private Direction dir;
 	private int capacity;
+	private ArrayList<Passenger> passengers; // Key is floor, value is number of passengers getting off at that floor
 	private ArrayList<Integer> goalsAbove; // Goal floors above the current floor sorted increasing
 	private ArrayList<Integer> goalsBelow; // Goal floors below the current floor sorted decreasing
 
@@ -133,6 +136,25 @@ class Elevator {
 
 	public void setDirection(Direction d) {
 		dir = d;
+	}
+
+	public void addPassenger(Passenger p) {
+		passengers.add(p);
+	}
+
+	/**
+	 * Offload passengers at a given floor
+	 */
+	public void dropOff(int floor) {
+		for (Passenger p : new ArrayList<>(passengers)) {
+			if (p.destination == floor) {
+				passengers.remove(p);
+			}
+		}
+	}
+
+	public ArrayList<Passenger> getPassengers() {
+		return passengers;
 	}
 
 	public ArrayList<Integer> getGoalsAbove() {
@@ -180,7 +202,14 @@ class Elevator {
 	 * Returns whether or not an elevator is full
 	 */
 	public boolean isFull() {
-		return goalsAbove.size() + goalsBelow.size() == capacity;
+		return passengers.size() == capacity;
 	}
+}
 
+class Passenger {
+	public int destination;
+
+	public Passenger(int d) {
+		destination = d;
+	}
 }
