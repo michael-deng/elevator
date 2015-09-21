@@ -1,0 +1,18 @@
+Elevator Control System
+
+Two main classes:
+
+1. Elevator Control System
+
+- Has a reference to all the elevators in the system via an array
+- Allows the retrieval of an elevator
+- Has a method that allows updating of an elevator's attributes
+- Given a pickup request, schedules a pickup for an elevator in the system
+- Enables stepping through a simulation of the control system
+
+2. Elevator
+
+- Has getters and setters for accessing and modifying the attributes of an elevator
+- Stores all scheduled dropoffs in two separate lists, one containing all dropoffs above the current floor and one containing all dropoffs below the current floor
+- Contains an addFloor method that takes a dropoff location and inserts it into the correct position in the correct dropoff list
+
