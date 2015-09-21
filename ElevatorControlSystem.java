@@ -27,14 +27,16 @@ class ElevatorControlSystem {
 	/**
 	 * Receive a pickup request
 	 */
-	public void pickUp(int start, int destination, Direction dir) {
+	public void pickUp(int start, ArrayList<Passenger> passengers, Direction dir) {
 
 		// First check if there is an elevator on this floor
 
 		for (Elevator e : elevators) {
-			if (!e.isFull() && e.getFloor() == start) {
-				e.addGoal(destination);
-				e.addPassenger(new Passenger(destination));
+			if (passengers.size() <= e.freeSpace() && e.getFloor() == start) {
+				for (Passengers p : passengers) {
+					e.addGoal(p.destination);
+					e.addPassenger(p);
+				}
 				return;
 			}
 		}
@@ -145,7 +147,7 @@ class Elevator {
 	}
 
 	/**
-	 * Offload passengers who's destination is at the input floor
+	 * Offload all passengers whose destinations are at the input floor
 	 */
 	public void dropOff(int floor) {
 		for (Passenger p : new ArrayList<>(passengers)) {
@@ -203,8 +205,8 @@ class Elevator {
 	/**
 	 * Returns whether or not an elevator is full
 	 */
-	public boolean isFull() {
-		return passengers.size() == capacity;
+	public int freeSpace() {
+		return capacity - passengers.size();
 	}
 }
 

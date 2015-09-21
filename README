@@ -5,10 +5,10 @@ Two main classes:
 
 1. Elevator Control System
 
-- Has a reference to all the elevators in the system via an array
+- Has a reference to all the elevators in the system via an ArrayList
 - Allows the retrieval of an elevator
 - Has a method that allows updating of an elevator's attributes
-- Given a pickup request, schedules a pickup for an elevator in the system
+- Given a pickup request, schedules a pickup for an elevator in the system that has enough room for all passengers in the request
 - Enables stepping through a simulation of the control system
 
 2. Elevator
@@ -31,6 +31,18 @@ Given a pickup request, we always first check if there is an elevator with room 
 
 
 
+Additional Considerations:
+
+Right now, elevators do not consecutive pickup requests from the same floor.
+
+If I have more time, I would implement some more comprehensive features. For example, all elevators have emergency alarms. If it goes off, the elevator should stop and let people out. If there's no emergency, the requests of everyone who just got off should be re-entered with the pickup method. If there is a serious emergency like a fire, all elevators should stop at their closest floor and let everyone out.
+
+Some elevators might be undergoing maintenance, in which case the elevator should not respond to requests from regular users.
+
+
+
 Some Additional Notes:
 
 I use ArrayLists pretty liberally in this system. Efficiency can probably improved by using another data structure with better lookup/insertion/deletion speeds, such as a HashMap, but since the maximum number of elevators is only 16 and the maximum number of passengers in an elevator is probably no more than 20, I felt that using an ArrayList to store elevator/passenger is fine efficiency-wise.
+
+
