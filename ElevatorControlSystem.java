@@ -6,12 +6,14 @@ class ElevatorControlSystem {
 	private ArrayList<Elevator> elevators; // References all the elevators in our system
 	private HashMap<Integer, Request> pickUpRequests; // Maps floor to the request at that floor
 
-
+	/**
+	 * Add a new elevator to our control system
+	 */
 	public void addElevator(Elevator e) {
 		if (elevators.size() < 16) {
 			elevators.add(e);
 		} else {
-			System.out.println("Maximum number of elevators is 16.")
+			System.out.println("Maximum number of elevators is 16.");
 		}
 	}
 
@@ -156,6 +158,7 @@ class ElevatorControlSystem {
 	}
 }
 
+
 class Elevator {
 	private int id;
 	private int floor;
@@ -265,6 +268,7 @@ class Passenger {
 		destination = d;
 	}
 }
+
 
 class Request {
 	public ArrayList<Passenger> passengers;
